@@ -44,7 +44,7 @@ class ViewController: UIViewController {
      */
     @IBAction func ClearVowelButton(_ sender: UIButton) {
 //        let voweless = (MiddleLable.text ?? "").filter(while: {["a", "e", "i", "o", "u"].contains($0)})
-        let voweless = (MiddleLable.text ?? "").filter({!["a", "e", "i", "o", "u"].contains($0)})
+        let voweless = (MiddleLable.text ?? "").filter({!["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"].contains($0)})
         print(voweless)
         MiddleLable.text = voweless
     }
