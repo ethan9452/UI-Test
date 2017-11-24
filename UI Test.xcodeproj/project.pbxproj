@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		E7148C811FA4691300A613F6 /* GeoCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7148C801FA4691300A613F6 /* GeoCache.swift */; };
 		E71C64F21F9933FD009596F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71C64F11F9933FD009596F8 /* AppDelegate.swift */; };
-		E71C64F41F9933FD009596F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71C64F31F9933FD009596F8 /* ViewController.swift */; };
+		E71C64F41F9933FD009596F8 /* NewCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71C64F31F9933FD009596F8 /* NewCacheViewController.swift */; };
 		E71C64F71F9933FD009596F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71C64F51F9933FD009596F8 /* Main.storyboard */; };
 		E71C64F91F9933FD009596F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71C64F81F9933FD009596F8 /* Assets.xcassets */; };
 		E71C64FC1F9933FD009596F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71C64FA1F9933FD009596F8 /* LaunchScreen.storyboard */; };
+		E79A67B51FC7743D009D0042 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79A67B41FC7743D009D0042 /* DetailViewController.swift */; };
+		E7FBCBB31FBAD33900A33D36 /* GeoCacheTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FBCBB21FBAD33900A33D36 /* GeoCacheTableViewCell.swift */; };
+		E7FBCBB51FBAD50D00A33D36 /* GeoCacheTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FBCBB41FBAD50D00A33D36 /* GeoCacheTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E7148C801FA4691300A613F6 /* GeoCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCache.swift; sourceTree = "<group>"; };
 		E71C64EE1F9933FD009596F8 /* UI Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UI Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E71C64F11F9933FD009596F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E71C64F31F9933FD009596F8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E71C64F31F9933FD009596F8 /* NewCacheViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCacheViewController.swift; sourceTree = "<group>"; };
 		E71C64F61F9933FD009596F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E71C64F81F9933FD009596F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E71C64FB1F9933FD009596F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E71C64FD1F9933FD009596F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E79A67B41FC7743D009D0042 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E7FBCBB21FBAD33900A33D36 /* GeoCacheTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCacheTableViewCell.swift; sourceTree = "<group>"; };
+		E7FBCBB41FBAD50D00A33D36 /* GeoCacheTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCacheTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,12 +63,15 @@
 			isa = PBXGroup;
 			children = (
 				E71C64F11F9933FD009596F8 /* AppDelegate.swift */,
-				E71C64F31F9933FD009596F8 /* ViewController.swift */,
+				E79A67B41FC7743D009D0042 /* DetailViewController.swift */,
+				E71C64F31F9933FD009596F8 /* NewCacheViewController.swift */,
+				E7FBCBB41FBAD50D00A33D36 /* GeoCacheTableViewController.swift */,
+				E7FBCBB21FBAD33900A33D36 /* GeoCacheTableViewCell.swift */,
+				E7148C801FA4691300A613F6 /* GeoCache.swift */,
 				E71C64F51F9933FD009596F8 /* Main.storyboard */,
 				E71C64F81F9933FD009596F8 /* Assets.xcassets */,
 				E71C64FA1F9933FD009596F8 /* LaunchScreen.storyboard */,
 				E71C64FD1F9933FD009596F8 /* Info.plist */,
-				E7148C801FA4691300A613F6 /* GeoCache.swift */,
 			);
 			path = "UI Test";
 			sourceTree = "<group>";
@@ -139,8 +148,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7FBCBB51FBAD50D00A33D36 /* GeoCacheTableViewController.swift in Sources */,
+				E7FBCBB31FBAD33900A33D36 /* GeoCacheTableViewCell.swift in Sources */,
 				E7148C811FA4691300A613F6 /* GeoCache.swift in Sources */,
-				E71C64F41F9933FD009596F8 /* ViewController.swift in Sources */,
+				E79A67B51FC7743D009D0042 /* DetailViewController.swift in Sources */,
+				E71C64F41F9933FD009596F8 /* NewCacheViewController.swift in Sources */,
 				E71C64F21F9933FD009596F8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
