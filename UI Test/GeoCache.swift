@@ -14,12 +14,17 @@ let TitleKey = "title"
 let DetailsKey = "details"
 let CreatorKey = "creator"
 let RewardKey = "reward"
+let IdKey = "id"
+
+let ServerUrl = "http://localhost:5000/"
+let CreateCachePath = "createCache"
+let GetCachesPath = "getCaches"
 
 // Saves an array of GeoCache [String: String] to the UserDefault key GeoCacheKey
 func saveCachesToDefaults(_ caches: [GeoCache]) {
     let defaults = UserDefaults.standard
     
-    var dictArr: [[String: String]] = []
+    var dictArr: [[String: Any]] = []
     for c in caches {
         dictArr.append(c.dictionary)
     }
@@ -34,16 +39,19 @@ func loadCachesFromDefaults() -> [GeoCache] {
     if let loadedCaches = defaults.array(forKey: GeoCacheKey) {
         // Return value
         var geoCacheArray: [GeoCache] = []
-        
         for item in loadedCaches {
-            let geoCacheDict = item as? [String: String]
+            let geoCacheDict = item as? [String: Any]
             if geoCacheDict != nil {
-                let checkedGeoCache = GeoCache(fromDictionary: geoCacheDict!)
-                geoCacheArray.append(checkedGeoCache!)
+                if let checkedGeoCache = GeoCache(fromDictionary: geoCacheDict!) {
+                    geoCacheArray.append(checkedGeoCache)
+                }
+                else {
+                    print("Bad dict entry")
+                }
             }
             else {
                 // If item from array is not GeoCache type, need some way to throw error?
-                return [GeoCache(fromDictionary: ["bogus": "bogus"])!]
+                print("Bad dict entry")
             }
         }
         return geoCacheArray
@@ -53,24 +61,101 @@ func loadCachesFromDefaults() -> [GeoCache] {
     }    
 }
 
+func randomCacheId() -> Int {
+    return Int(arc4random())
+}
+
+func sendCacheToServer(_ cache: GeoCache) {
+    guard let url = URL(string: ServerUrl + CreateCachePath) else {
+        print("bad url")
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    
+    let data = try? JSONSerialization.data(withJSONObject: cache.dictionary, options: [])
+    request.httpBody = data
+    
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let task = URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        if let error = error {
+            print(error.localizedDescription ?? "Some kind of error")
+            return
+        }
+        print(response)
+        print(data)
+    }
+    
+    task.resume()
+
+}
+
+func loadCachesFromServer(onComplete: @escaping ([GeoCache]) -> ()) {
+    guard let url = URL(string: ServerUrl + GetCachesPath) else {
+        print("bad url")
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    
+    let task = URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        if let error = error {
+            print(error.localizedDescription ?? "Some kind of error")
+            return
+        }
+        print(response)
+        print(data)
+        
+        guard let cacheData = try? JSONSerialization.jsonObject(with: data!, options: []) else {
+            return
+        }
+
+        guard let cacheDict = cacheData as? [[String: Any]] else {
+            return
+        }
+    
+        var loadedCaches: [GeoCache] = []
+        for c in cacheDict {
+            if let checkedGeoCache = GeoCache(fromDictionary: c) {
+                loadedCaches.append(checkedGeoCache)
+            }
+        }
+        
+        onComplete(loadedCaches)
+    }
+
+    task.resume()
+    
+    
+}
+
 struct GeoCache {
+    var id: Int
     var title: String
     var details: String
     var creator: String
     var reward: String
     
     // Question, what is the reason that the internal and external variable names are different?
-    init?(fromDictionary dict: [String : String]) {
-        guard let title: String = dict[TitleKey] else {
+    init?(fromDictionary dict: [String : Any]) {
+        guard let title: String = dict[TitleKey] as? String else {
             return nil
         }
-        guard let details: String = dict[DetailsKey] else {
+        guard let details: String = dict[DetailsKey] as? String else {
             return nil
         }
-        guard let creator: String = dict[CreatorKey] else {
+        guard let creator: String = dict[CreatorKey] as? String else {
             return nil
         }
-        guard let reward: String = dict[RewardKey] else {
+        guard let reward: String = dict[RewardKey] as? String else {
+            return nil
+        }
+        guard let id: Int = dict[IdKey] as? Int else {
             return nil
         }
         
@@ -78,11 +163,12 @@ struct GeoCache {
         self.details = details
         self.creator = creator
         self.reward = reward
+        self.id = id
     }
     
-    var dictionary: [String: String] {
+    var dictionary: [String: Any] {
         get {
-            return [TitleKey: self.title, DetailsKey: self.details, CreatorKey: self.creator, RewardKey:self.reward ]
+            return [IdKey: self.id, TitleKey: self.title, DetailsKey: self.details, CreatorKey: self.creator, RewardKey:self.reward ]
         }
     }
     

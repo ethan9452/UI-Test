@@ -16,7 +16,16 @@ class GeoCacheTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        geoCacheList = loadCachesFromDefaults()
+//        geoCacheList = loadCachesFromDefaults()
+        loadCachesFromServer() {
+            (c: [GeoCache]) in
+            self.geoCacheList = c
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -75,7 +84,8 @@ class GeoCacheTableViewController: UITableViewController {
                 
                 tableView.insertRows(at: [indexPath], with: .automatic)
              
-                saveCachesToDefaults(geoCacheList)
+//                saveCachesToDefaults(geoCacheList)
+                sendCacheToServer(controllerSource.cache!)
             }
         }
 
@@ -121,10 +131,6 @@ class GeoCacheTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        print("begin prepare")
-        
-        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ToDetail" {
@@ -132,19 +138,12 @@ class GeoCacheTableViewController: UITableViewController {
                 print("no row")
                 return
             }
-            
-            print("fuck1")
-            
             guard let dest = segue.destination as? DetailViewController else {
                 print("no details")
                 return
             }
-            
-            print("fuck2")
-            
             dest.cacheDescription = geoCacheList[cur_row].details
-            
-            print("fuck3")
+
 
         }
     }

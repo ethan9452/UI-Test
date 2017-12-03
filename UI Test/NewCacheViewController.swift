@@ -34,7 +34,7 @@ class NewCacheViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         print("segue adding new cachee")
-        
+                
         guard let newTitle: String = titleField.text, !newTitle.isEmpty else {
             cache = nil
             return
@@ -53,7 +53,7 @@ class NewCacheViewController: UIViewController {
             return
         }
         
-        if let newGeoCache = GeoCache(fromDictionary: [TitleKey: newTitle, DetailsKey: newDetails, CreatorKey: newCreator, RewardKey: newReward ]) {
+        if let newGeoCache = GeoCache(fromDictionary: [IdKey: randomCacheId(), TitleKey: newTitle, DetailsKey: newDetails, CreatorKey: newCreator, RewardKey: newReward ]) {
             cache = newGeoCache
         }
         
